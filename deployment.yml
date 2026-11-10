@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: # {insert kind here}
+kind: Deployment
 metadata:
   labels:
     run: djangoserver
@@ -20,10 +20,15 @@ spec:
         run: djangoserver
     spec:
       containers:
-      - image: # {insert image here}
+      - image: us.icr.io/sn-labs-earsmedal5a/djangoserver:1
         imagePullPolicy: Always
         name: djangoserver
         ports:
-        - containerPort: # {insert port here}
+        - containerPort: 8000
           protocol: TCP
+        env:
+        - name: SONGS_URL
+          value: "http://songs-sn-labs-earsmedal5a.labs-prod-openshift-san-a45631dc5778dc6371c67d206ba9ae5c-0000.us-east.containers.appdomain.cloud"
+        - name: PICTURES_URL
+          value: "https://getpictures.2gz8ptlp4249.us-south.codeengine.appdomain.cloud"
       restartPolicy: Always
